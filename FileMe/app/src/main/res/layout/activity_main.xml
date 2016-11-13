@@ -1,24 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="16dp"
+    android:weightSum="1"
     tools:context="com.example.joey.fileme.MainActivity">
 
-    <Button
-        android:id="@+id/main_activity_btn_request_image"
-        android:onClick="launchRequestImageActivity"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Request Image" />
+    <TextView
+        android:text="Welcome to FileMe!\nRequest a file or upload your own!"
+        android:textAlignment="center"
+        android:textSize="16dp"
+        android:textColor="@color/black"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/title"
+        android:layout_weight="0.10"/>
 
-    <Button
-        android:id="@+id/main_activity_btn_upload_image"
-        android:onClick="launchUploadImageActivity"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Upload Image" />
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:srcCompat="@drawable/filecabinet"
+        android:id="@+id/background"
+        android:layout_weight=".8"
+        />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight=".1"
+        android:weightSum="1">
+
+        <Button
+            android:id="@+id/main_activity_btn_upload_image"
+            android:onClick="launchUploadImageActivity"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Upload Image"
+            android:layout_weight=".5"/>
+
+        <Button
+            android:id="@+id/main_activity_btn_request_image"
+            android:onClick="launchRequestImageActivity"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Request Image"
+            android:layout_weight=".5"/>
+    </LinearLayout>
+
 </LinearLayout>
