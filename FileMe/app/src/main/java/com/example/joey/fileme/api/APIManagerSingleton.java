@@ -3,6 +3,7 @@ package com.example.joey.fileme.api;
 import android.util.Log;
 import android.widget.LinearLayout;
 
+import com.example.joey.fileme.request_image.server_image_view.ServerImageViewFactory;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -39,7 +40,7 @@ public class APIManagerSingleton {
         return instance;
     }
 
-    public void getImages(LinearLayout container) {
+    public void getImages(final LinearLayout container) {
         Call<JsonArray> call = api.getAllImages();
 
         call.enqueue(new Callback<JsonArray>() {
@@ -50,6 +51,23 @@ public class APIManagerSingleton {
 
                     for (JsonElement element : response.body()) {
                         Log.i("element", element.toString());
+                        JsonObject jsonObject = element.getAsJsonObject();
+
+                        int id = jsonObject.get("id").getAsInt();
+                        String name = jsonObject.get("name").getAsString();
+                        long date = jsonObject.get("date").getAsLong();
+                        byte[] data = null;
+                        String desc = "";
+                        if (!jsonObject.get("description").isJsonNull())
+                            desc = jsonObject.get("description").getAsString();
+
+                        container.addView(new ServerImageViewFactory(container.getContext(), data)
+                                .addID(id)
+                                .addTitle(name)
+                                .addDescription(desc)
+                                .addDate(date)
+                                .build());
+
                     }
                 } else {
                     Log.i("GET FAILURE", response.message());
@@ -63,7 +81,7 @@ public class APIManagerSingleton {
         });
     }
 
-    public void getImages(String title, LinearLayout container) {
+    public void getImages(String title, final LinearLayout container) {
         Call<JsonObject> call = api.getImage(title);
 
         call.enqueue(new Callback<JsonObject>() {
@@ -71,8 +89,23 @@ public class APIManagerSingleton {
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                 if (response.isSuccessful()) {
                     Log.i("GET SUCCEESS", response.message());
+                    JsonObject jsonObject = response.body();
+                    
+                    int id = jsonObject.get("id").getAsInt();
+                    String name = jsonObject.get("name").getAsString();
+                    long date = jsonObject.get("date").getAsLong();
+                    byte[] data = null;
+                    String desc = "";
+                    if (!jsonObject.get("description").isJsonNull())
+                        desc = jsonObject.get("description").getAsString();
 
-                    Log.i("element", response.body().toString());
+                    container.addView(new ServerImageViewFactory(container.getContext(), data)
+                            .addID(id)
+                            .addTitle(name)
+                            .addDescription(desc)
+                            .addDate(date)
+                            .build());
+
                 } else {
                     Log.i("GET FAILURE", response.message());
                 }

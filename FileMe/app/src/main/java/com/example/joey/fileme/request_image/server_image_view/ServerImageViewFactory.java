@@ -7,6 +7,11 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
+
 /**
  * Created by Joey on 13-Nov-16.
  */
@@ -16,35 +21,48 @@ public class ServerImageViewFactory {
     private LinearLayout parent;
 
     public ServerImageViewFactory(Context context, byte[] data) {
-        // Immutable bitmap
-        Bitmap image = BitmapFactory.decodeByteArray(data, 0, data.length);
-        // Make it mutable
-        image = image.copy(Bitmap.Config.ARGB_8888, true);
-
-        ImageView imageView = new ImageView(parent.getContext());
-        imageView.setImageBitmap(image);
-
         parent = new LinearLayout(context);
 
-        parent.addView(imageView);
+        if (data != null) {
+            // Immutable bitmap
+            Bitmap image = BitmapFactory.decodeByteArray(data, 0, data.length);
+            // Make it mutable
+            image = image.copy(Bitmap.Config.ARGB_8888, true);
+
+            ImageView imageView = new ImageView(parent.getContext());
+            imageView.setImageBitmap(image);
+
+            parent.addView(imageView);
+        }
     }
 
-    public void addTitle(String title) {
+    public ServerImageViewFactory addTitle(String title) {
         TextView textView = new TextView(parent.getContext());
         textView.setText(title);
         parent.addView(textView);
+        return this;
     }
 
-    public void addDescription(String description) {
+    public ServerImageViewFactory addDescription(String description) {
         TextView textView = new TextView(parent.getContext());
         textView.setText(description);
         parent.addView(textView);
+        return this;
     }
 
-    public void addID(int id) {
+    public ServerImageViewFactory addID(int id) {
         TextView textView = new TextView(parent.getContext());
-        textView.setText(id);
+        textView.setText("" + id);
         parent.addView(textView);
+        return this;
+    }
+
+    public ServerImageViewFactory addDate(long date) {
+        SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
+        TextView textView = new TextView(parent.getContext());
+        textView.setText(format.format(new Date(date)));
+        parent.addView(textView);
+        return this;
     }
 
     public LinearLayout build() {
