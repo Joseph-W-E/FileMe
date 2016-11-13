@@ -12,21 +12,22 @@
     <TextView
         android:text="Welcome to FileMe!\nRequest a file or upload your own!"
         android:textAlignment="center"
-        android:textSize="16dp"
+        android:textSize="16sp"
         android:textColor="@color/black"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:id="@+id/title"
-        android:layout_weight="0.10"/>
+        android:layout_weight="0.10"
+        android:background="@color/white"/>
 
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:srcCompat="@drawable/filecabinet"
         android:id="@+id/background"
         android:layout_weight=".8"
+        android:scaleType="centerCrop"
         />
 
     <LinearLayout
@@ -34,7 +35,8 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight=".1"
-        android:weightSum="1">
+        android:weightSum="1"
+        android:background="@color/white">
 
         <Button
             android:id="@+id/main_activity_btn_upload_image"
