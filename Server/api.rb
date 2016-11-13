@@ -1,6 +1,12 @@
+require 'rubygems'
 require 'sinatra'
 require 'sqlite3'
 require 'json'
+
+configure do
+  set :bind, '65.110.227.87'
+  set :bind, '0.0.0.0'
+end
 
 db = SQLite3::Database.open 'database.db'
 
@@ -13,7 +19,7 @@ end
 
 get '/get/:name' do
   table = db.execute "select * from images where name = '#{params[:name]}';"
-  JSON.pretty_generate convert_table_to_array_of_hashes table, %w(id name description date data)
+  JSON.pretty_generate convert_table_to_array_of_hashes(table, %w(id name description date data))[0]
 end
 
 # POST REQUESTS

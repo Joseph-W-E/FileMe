@@ -10,6 +10,7 @@
 
     <Button
         android:id="@+id/btn_view_picture"
+        android:onClick="dispatchViewImageService"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
@@ -17,9 +18,10 @@
 
     <Button
         android:id="@+id/btn_take_picture"
+        android:onClick="dispatchTakePictureIntent"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:text="@string/upload"/>
+        android:text="@string/take"/>
 
 </LinearLayout>
