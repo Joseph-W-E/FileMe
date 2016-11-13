@@ -4,7 +4,7 @@ require 'sqlite3'
 require 'json'
 
 configure do
-  set :bind, '65.110.227.87'
+  set :bind, '65.110.228.25'
   set :bind, '0.0.0.0'
 end
 
