@@ -94,8 +94,24 @@ public class APIManagerSingleton {
         });
     }
 
-    public void postImage() {
-        // TODO
+    public void postImage(int id, String name, String desc, long date, byte[] data) {
+        ServerData serverData = new ServerData(id, name, desc, date, Base64.encodeToString(data, Base64.DEFAULT));
+        Call<JsonObject> call = api.postImage(serverData);
+        call.enqueue(new Callback<JsonObject>() {
+            @Override
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                if (response.isSuccessful()) {
+                    Log.i("POST SUCCESS", response.message());
+                } else {
+                    Log.i("POST FAILURE", response.message());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<JsonObject> call, Throwable t) {
+                Log.i("POST FAILURE", t.getLocalizedMessage());
+            }
+        });
     }
 
     /**

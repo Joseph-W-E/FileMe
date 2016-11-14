@@ -33,7 +33,7 @@ public interface APIInterface {
 
     @Headers({"Content-Type: application/json"})
     @POST("/post")
-    Call<JsonObject> postImage(@Body JsonObject body);
+    Call<JsonObject> postImage(@Body ServerData body);
 
 
 }
