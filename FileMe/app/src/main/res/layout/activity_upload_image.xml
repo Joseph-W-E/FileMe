@@ -21,8 +21,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Take Picture"
-            style="@style/AppTextView" />
+            android:text="Take\nPicture"
+            style="@style/AppButton" />
 
         <Button
             android:id="@+id/upload_activity_btn_upload_picture"
@@ -30,17 +30,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Upload Picture"
-            style="@style/AppTextView" />
-
-        <Button
-            android:id="@+id/upload_activity_btn_test"
-            android:onClick="test"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Test"
-            style="@style/AppTextView"/>
+            android:text="Upload\nPicture"
+            style="@style/AppButton" />
 
     </LinearLayout>
 

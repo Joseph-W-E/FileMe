@@ -16,7 +16,7 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:text="Welcome to FileMe!\nRequest a file or upload your own!"
-        style="@style/AppTextView"/>
+        style="@style/AppTextViewTitle"/>
 
     <ImageView
         android:layout_width="match_parent"
@@ -38,7 +38,7 @@
             android:layout_height="wrap_content"
             android:text="Upload Image"
             android:layout_weight=".5"
-            style="@style/AppTextView"/>
+            style="@style/AppButton"/>
 
         <Button
             android:id="@+id/main_activity_btn_request_image"
@@ -47,7 +47,7 @@
             android:layout_height="wrap_content"
             android:text="Request Image"
             android:layout_weight=".5"
-            style="@style/AppTextView"/>
+            style="@style/AppButton"/>
     </LinearLayout>
 
 </LinearLayout>
