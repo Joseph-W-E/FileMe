@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:padding="16dp">
 
-    <ImageView
+    <com.example.joey.fileme.upload_image.ImageViewWithListener
         android:id="@+id/upload_activity_iv_image"
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -22,7 +22,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Take Picture"
-            style="?android:attr/buttonBarButtonStyle" />
+            style="@style/AppTextView" />
 
         <Button
             android:id="@+id/upload_activity_btn_upload_picture"
@@ -31,7 +31,16 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Upload Picture"
-            style="?android:attr/buttonBarButtonStyle" />
+            style="@style/AppTextView" />
+
+        <Button
+            android:id="@+id/upload_activity_btn_test"
+            android:onClick="test"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Test"
+            style="@style/AppTextView"/>
 
     </LinearLayout>
 

@@ -23,8 +23,7 @@ public class ServerData {
     @SerializedName("data")
     private String data;
 
-    public ServerData(int id, String name, String description, long date, String data) {
-        this.id = id;
+    public ServerData(String name, String description, long date, String data) {
         this.name = name;
         this.description = description;
         this.date = date;

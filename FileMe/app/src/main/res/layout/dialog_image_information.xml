@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="8dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Name (with extension):"
+        style="@style/AppTextView"/>
+
+    <EditText
+        android:id="@+id/dialog_image_information_et_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="example.png"
+        style="@style/AppTextView"/>
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Description:"
+        style="@style/AppTextView"/>
+
+    <EditText
+        android:id="@+id/dialog_image_information_et_desc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="my description here :)"
+        style="@style/AppTextView"/>
+
+</LinearLayout>

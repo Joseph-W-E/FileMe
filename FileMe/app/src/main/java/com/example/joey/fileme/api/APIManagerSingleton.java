@@ -94,8 +94,15 @@ public class APIManagerSingleton {
         });
     }
 
-    public void postImage(int id, String name, String desc, long date, byte[] data) {
-        ServerData serverData = new ServerData(id, name, desc, date, Base64.encodeToString(data, Base64.DEFAULT));
+    /**
+     * Sends the image and it's respective data to the server to store it.
+     * @param name The image name.
+     * @param desc The image description.
+     * @param date The image date (in milliseconds).
+     * @param data The image data encoded as base64.
+     */
+    public void postImage(String name, String desc, long date, String data) {
+        ServerData serverData = new ServerData(name, desc, date, data);
         Call<JsonObject> call = api.postImage(serverData);
         call.enqueue(new Callback<JsonObject>() {
             @Override

@@ -4,7 +4,7 @@ require 'sqlite3'
 require 'json'
 
 configure do
-  set :bind, '65.110.228.25'
+  set :bind, '65.110.227.87'
   set :bind, '0.0.0.0'
 end
 
@@ -33,7 +33,7 @@ post '/post' do
     payload[:name] = payload[:name].tr("'", "")
     if (payload.has_key?(:description))
       payload[:description] = payload[:description].tr("'", "")
-      db.execute "insert into images (name, description, date, data) values ('#{payload[:name]}', '#{payload[:description]}', #{payload[:date]}, #{payload[:data]});"
+      db.execute "insert into images (name, description, date, data) values ('#{payload[:name]}', '#{payload[:description]}', #{payload[:date]}, '#{payload[:data]}');"
     else
       db.execute "insert into images (name, date, data) values ('#{payload[:name]}', #{payload[:date]}, #{payload[:data]});"
     end

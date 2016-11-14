@@ -18,7 +18,8 @@
         android:id="@+id/request_image_activity_et_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Enter image title..." />
+        android:hint="Enter image title..."
+        style="@style/AppTextView"/>
 
     <Button
         android:id="@+id/request_image_activity_btn_request"
@@ -26,6 +27,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Request Image"
-        android:background="@color/colorPrimary" />
+        style="@style/AppTextView"/>
 
 </LinearLayout>
