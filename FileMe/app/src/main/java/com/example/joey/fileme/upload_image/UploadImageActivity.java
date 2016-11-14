@@ -44,9 +44,10 @@ public class UploadImageActivity extends Activity {
             @Override
             public void updateData() {
                 Bitmap bitmap = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
-                ByteBuffer buffer = ByteBuffer.allocate(bitmap.getByteCount());
-                bitmap.copyPixelsToBuffer(buffer);
-                encodedData = Base64.encodeToString(buffer.array(), Base64.DEFAULT);
+                ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
+                byte[] bytes = byteArrayOutputStream .toByteArray();
+                encodedData = Base64.encodeToString(bytes, Base64.DEFAULT);
             }
         });
     }
@@ -82,15 +83,6 @@ public class UploadImageActivity extends Activity {
             Bitmap imageBitmap = (Bitmap) extras.get("data");
             imageView.setImageBitmap(imageBitmap);
         }
-    }
-
-
-    public void test(View v) {
-        byte[] arr = Base64.decode(encodedData, Base64.DEFAULT);
-        Bitmap temp = BitmapFactory.decodeByteArray(arr, 0, arr.length);
-        if (temp == null)
-            Log.i("test", "null bitmap");
-        imageView.setImageBitmap(temp);
     }
 
 }

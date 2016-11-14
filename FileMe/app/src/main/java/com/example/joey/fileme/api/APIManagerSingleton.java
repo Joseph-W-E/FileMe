@@ -148,12 +148,15 @@ public class APIManagerSingleton {
         if (!jsonObject.get("data").isJsonNull())
             data = Base64.decode(jsonObject.get("data").getAsString(), Base64.DEFAULT);
 
-        container.addView(new ServerImageViewFactory(container.getContext(), data)
+        ServerImageViewFactory factory = new ServerImageViewFactory(container.getContext(), data)
                 .addID(id)
-                .addName(name)
-                .addDescription(desc)
-                .addDate(date)
-                .build());
+                .addName(name);
+        if (!desc.equals("default"))
+            factory.addDescription(desc);
+        factory.addDate(date);
+
+        container.addView(factory.build());
+
     }
     
 }

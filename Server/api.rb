@@ -35,7 +35,7 @@ post '/post' do
       payload[:description] = payload[:description].tr("'", "")
       db.execute "insert into images (name, description, date, data) values ('#{payload[:name]}', '#{payload[:description]}', #{payload[:date]}, '#{payload[:data]}');"
     else
-      db.execute "insert into images (name, date, data) values ('#{payload[:name]}', #{payload[:date]}, #{payload[:data]});"
+      db.execute "insert into images (name, date, data) values ('#{payload[:name]}', #{payload[:date]}, '#{payload[:data]}');"
     end
     return_message[:status] = '201 - Successfully created new file.'
   else
