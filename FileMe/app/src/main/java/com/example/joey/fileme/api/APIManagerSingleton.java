@@ -1,5 +1,6 @@
 package com.example.joey.fileme.api;
 
+import android.util.Base64;
 import android.util.Log;
 import android.widget.LinearLayout;
 
@@ -7,8 +8,6 @@ import com.example.joey.fileme.request_image.server_image_view.ServerImageViewFa
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -40,6 +39,10 @@ public class APIManagerSingleton {
         return instance;
     }
 
+    /**
+     * Gets all the images stores on the server and stores them in the given container.
+     * @param container The layout that will hold all retrieved images.
+     */
     public void getImages(final LinearLayout container) {
         Call<JsonArray> call = api.getAllImages();
 
@@ -51,23 +54,7 @@ public class APIManagerSingleton {
 
                     for (JsonElement element : response.body()) {
                         Log.i("element", element.toString());
-                        JsonObject jsonObject = element.getAsJsonObject();
-
-                        int id = jsonObject.get("id").getAsInt();
-                        String name = jsonObject.get("name").getAsString();
-                        long date = jsonObject.get("date").getAsLong();
-                        byte[] data = null;
-                        String desc = "";
-                        if (!jsonObject.get("description").isJsonNull())
-                            desc = jsonObject.get("description").getAsString();
-
-                        container.addView(new ServerImageViewFactory(container.getContext(), data)
-                                .addID(id)
-                                .addTitle(name)
-                                .addDescription(desc)
-                                .addDate(date)
-                                .build());
-
+                        addJsonObjectToContainer(element.getAsJsonObject(), container);
                     }
                 } else {
                     Log.i("GET FAILURE", response.message());
@@ -81,31 +68,20 @@ public class APIManagerSingleton {
         });
     }
 
-    public void getImages(String title, final LinearLayout container) {
-        Call<JsonObject> call = api.getImage(title);
+    /**
+     * Gets the image with the given name and stores it in the given container.
+     * @param name The name of the image.
+     * @param container The layout that will hold the retrieved image.
+     */
+    public void getImages(String name, final LinearLayout container) {
+        Call<JsonObject> call = api.getImage(name);
 
         call.enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                 if (response.isSuccessful()) {
                     Log.i("GET SUCCEESS", response.message());
-                    JsonObject jsonObject = response.body();
-                    
-                    int id = jsonObject.get("id").getAsInt();
-                    String name = jsonObject.get("name").getAsString();
-                    long date = jsonObject.get("date").getAsLong();
-                    byte[] data = null;
-                    String desc = "";
-                    if (!jsonObject.get("description").isJsonNull())
-                        desc = jsonObject.get("description").getAsString();
-
-                    container.addView(new ServerImageViewFactory(container.getContext(), data)
-                            .addID(id)
-                            .addTitle(name)
-                            .addDescription(desc)
-                            .addDate(date)
-                            .build());
-
+                    addJsonObjectToContainer(response.body(), container);
                 } else {
                     Log.i("GET FAILURE", response.message());
                 }
@@ -120,6 +96,41 @@ public class APIManagerSingleton {
 
     public void postImage() {
         // TODO
+    }
+
+    /**
+     * Converts the given JsonObject into usable data, and then adds the data to the container.
+     * @param jsonObject The JsonObject to extract data from.
+     * @param container The container to store the newly created view.
+     */
+    private void addJsonObjectToContainer(JsonObject jsonObject, LinearLayout container) {
+        int id = -1;
+        String name = "default";
+        String desc = "default";
+        long date = -1;
+        byte[] data = null;
+
+        if (!jsonObject.get("id").isJsonNull())
+            id = jsonObject.get("id").getAsInt();
+
+        if (!jsonObject.get("name").isJsonNull())
+            name = jsonObject.get("name").getAsString();
+
+        if (!jsonObject.get("description").isJsonNull())
+            desc = jsonObject.get("description").getAsString();
+
+        if (!jsonObject.get("date").isJsonNull())
+            date = jsonObject.get("date").getAsLong();
+
+        if (!jsonObject.get("data").isJsonNull())
+            data = Base64.decode(jsonObject.get("data").getAsString(), Base64.DEFAULT);
+
+        container.addView(new ServerImageViewFactory(container.getContext(), data)
+                .addID(id)
+                .addName(name)
+                .addDescription(desc)
+                .addDate(date)
+                .build());
     }
     
 }

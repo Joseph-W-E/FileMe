@@ -22,6 +22,12 @@ public class ServerImageViewFactory {
 
     public ServerImageViewFactory(Context context, byte[] data) {
         parent = new LinearLayout(context);
+        parent.setLayoutParams(new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.MATCH_PARENT
+        ));
+        parent.setOrientation(LinearLayout.VERTICAL);
+        parent.setPadding(8, 8, 8, 8);
 
         if (data != null) {
             // Immutable bitmap
@@ -36,37 +42,35 @@ public class ServerImageViewFactory {
         }
     }
 
-    public ServerImageViewFactory addTitle(String title) {
-        TextView textView = new TextView(parent.getContext());
-        textView.setText(title);
-        parent.addView(textView);
+    public ServerImageViewFactory addName(String name) {
+        parent.addView(buildTextView(name));
         return this;
     }
 
     public ServerImageViewFactory addDescription(String description) {
-        TextView textView = new TextView(parent.getContext());
-        textView.setText(description);
-        parent.addView(textView);
+        parent.addView(buildTextView(description));
         return this;
     }
 
     public ServerImageViewFactory addID(int id) {
-        TextView textView = new TextView(parent.getContext());
-        textView.setText("" + id);
-        parent.addView(textView);
+        parent.addView(buildTextView("" + id));
         return this;
     }
 
     public ServerImageViewFactory addDate(long date) {
         SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
-        TextView textView = new TextView(parent.getContext());
-        textView.setText(format.format(new Date(date)));
-        parent.addView(textView);
+        parent.addView(buildTextView(format.format(new Date(date))));
         return this;
     }
 
     public LinearLayout build() {
         return parent;
+    }
+
+    private TextView buildTextView(String text) {
+        TextView textView = new TextView(parent.getContext());
+        textView.setText(text);
+        return textView;
     }
 
 }
