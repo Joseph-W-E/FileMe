@@ -8,9 +8,6 @@ import com.google.gson.annotations.SerializedName;
 
 public class ServerData {
 
-    @SerializedName("id")
-    private int id;
-
     @SerializedName("name")
     private String name;
 
@@ -28,14 +25,6 @@ public class ServerData {
         this.description = description;
         this.date = date;
         this.data = data;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getName() {

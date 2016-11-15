@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 
 import com.example.joey.fileme.R;
 import com.example.joey.fileme.api.APIManagerSingleton;
@@ -23,7 +24,7 @@ public class RequestImageActivity extends Activity {
 
     public void requestImage(View v) {
         final EditText etTitle = (EditText) findViewById(R.id.request_image_activity_et_title);
-        final LinearLayout container = (LinearLayout) findViewById(R.id.request_image_activity_image_container);
+        final ScrollView container = (ScrollView) findViewById(R.id.request_image_activity_image_container);
         APIManagerSingleton manager = APIManagerSingleton.getInstance();
 
         String text = etTitle.getText().toString();

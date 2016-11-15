@@ -4,9 +4,13 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.example.joey.fileme.R;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -18,59 +22,69 @@ import java.util.Locale;
 
 public class ServerImageViewFactory {
 
-    private LinearLayout parent;
+    private LinearLayout main;
+    private ImageView imageView;
+    private TextView txtID, txtName, txtDesc, txtDate;
 
     public ServerImageViewFactory(Context context, byte[] data) {
-        parent = new LinearLayout(context);
-        parent.setLayoutParams(new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.MATCH_PARENT
-        ));
-        parent.setOrientation(LinearLayout.VERTICAL);
-        parent.setPadding(8, 8, 8, 8);
+        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+        main      = (LinearLayout) inflater.inflate(R.layout.server_image_view_item, null);
+        imageView = (ImageView) main.findViewById(R.id.server_image_view_item_image_view);
+        txtID     = (TextView) main.findViewById(R.id.server_image_view_item_txt_id);
+        txtName   = (TextView) main.findViewById(R.id.server_image_view_item_txt_name);
+        txtDesc   = (TextView) main.findViewById(R.id.server_image_view_item_txt_description);
+        txtDate   = (TextView) main.findViewById(R.id.server_image_view_item_txt_date);
+
+        /*** Not all views are going to be visible ***/
+        txtID  .setVisibility(View.GONE);
+        txtName.setVisibility(View.GONE);
+        txtDesc.setVisibility(View.GONE);
+        txtDate.setVisibility(View.GONE);
 
         if (data != null) {
-            // Immutable bitmap
-            Bitmap image = BitmapFactory.decodeByteArray(data, 0, data.length);
-            // Make it mutable
-            image = image.copy(Bitmap.Config.ARGB_8888, true);
-
-            ImageView imageView = new ImageView(parent.getContext());
+            Bitmap image = BitmapFactory.decodeByteArray(data, 0, data.length); // immutable
+            image = image.copy(Bitmap.Config.ARGB_8888, true);                  // mutable
             imageView.setImageBitmap(image);
 
-            parent.addView(imageView);
+            imageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    // Make the image blow up to take up the entire screen
+                }
+            });
+        } else {
+            imageView.setVisibility(View.GONE);
         }
     }
 
     public ServerImageViewFactory addName(String name) {
-        parent.addView(buildTextView(name));
+        txtName.setText(String.format(Locale.ENGLISH, "Name: %s", name));
+        txtName.setVisibility(View.VISIBLE);
         return this;
     }
 
     public ServerImageViewFactory addDescription(String description) {
-        parent.addView(buildTextView(description));
+        txtDesc.setText(String.format(Locale.ENGLISH, "Desc: %s", description));
+        txtDesc.setVisibility(View.VISIBLE);
         return this;
     }
 
     public ServerImageViewFactory addID(int id) {
-        parent.addView(buildTextView("" + id));
+        txtID.setText(String.format(Locale.ENGLISH, "ID: %d", id));
+        txtID.setVisibility(View.VISIBLE);
         return this;
     }
 
     public ServerImageViewFactory addDate(long date) {
-        SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
-        parent.addView(buildTextView(format.format(new Date(date))));
+        SimpleDateFormat format = new SimpleDateFormat("dd-MMMM-yyyy", Locale.US);
+        txtDate.setText(String.format(Locale.ENGLISH, "Date: %s", format.format(date)));
+        txtDate.setVisibility(View.VISIBLE);
         return this;
     }
 
     public LinearLayout build() {
-        return parent;
-    }
-
-    private TextView buildTextView(String text) {
-        TextView textView = new TextView(parent.getContext());
-        textView.setText(text);
-        return textView;
+        return main;
     }
 
 }

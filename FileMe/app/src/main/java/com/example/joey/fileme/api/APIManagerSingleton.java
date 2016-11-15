@@ -1,8 +1,12 @@
 package com.example.joey.fileme.api;
 
+import android.content.Context;
 import android.util.Base64;
 import android.util.Log;
+import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
+import android.widget.Toast;
 
 import com.example.joey.fileme.request_image.server_image_view.ServerImageViewFactory;
 import com.google.gson.JsonArray;
@@ -43,7 +47,7 @@ public class APIManagerSingleton {
      * Gets all the images stores on the server and stores them in the given container.
      * @param container The layout that will hold all retrieved images.
      */
-    public void getImages(final LinearLayout container) {
+    public void getImages(final View container) {
         Call<JsonArray> call = api.getAllImages();
 
         call.enqueue(new Callback<JsonArray>() {
@@ -73,7 +77,7 @@ public class APIManagerSingleton {
      * @param name The name of the image.
      * @param container The layout that will hold the retrieved image.
      */
-    public void getImages(String name, final LinearLayout container) {
+    public void getImages(String name, final View container) {
         Call<JsonObject> call = api.getImage(name);
 
         call.enqueue(new Callback<JsonObject>() {
@@ -101,7 +105,7 @@ public class APIManagerSingleton {
      * @param date The image date (in milliseconds).
      * @param data The image data encoded as base64.
      */
-    public void postImage(String name, String desc, long date, String data) {
+    public void postImage(String name, String desc, long date, String data, final Context context) {
         ServerData serverData = new ServerData(name, desc, date, data);
         Call<JsonObject> call = api.postImage(serverData);
         call.enqueue(new Callback<JsonObject>() {
@@ -109,14 +113,17 @@ public class APIManagerSingleton {
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                 if (response.isSuccessful()) {
                     Log.i("POST SUCCESS", response.message());
+                    Toast.makeText(context, "Success!", Toast.LENGTH_LONG).show();
                 } else {
                     Log.i("POST FAILURE", response.message());
+                    Toast.makeText(context, "Failed to upload...", Toast.LENGTH_LONG).show();
                 }
             }
 
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
                 Log.i("POST FAILURE", t.getLocalizedMessage());
+                Toast.makeText(context, "Failed to upload...", Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -126,7 +133,7 @@ public class APIManagerSingleton {
      * @param jsonObject The JsonObject to extract data from.
      * @param container The container to store the newly created view.
      */
-    private void addJsonObjectToContainer(JsonObject jsonObject, LinearLayout container) {
+    private void addJsonObjectToContainer(JsonObject jsonObject, View container) {
         int id = -1;
         String name = "default";
         String desc = "default";
@@ -155,8 +162,8 @@ public class APIManagerSingleton {
             factory.addDescription(desc);
         factory.addDate(date);
 
-        container.addView(factory.build());
-
+        ((ScrollView) container).addView(factory.build());
+        
     }
     
 }
