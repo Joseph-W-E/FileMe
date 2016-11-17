@@ -11,11 +11,6 @@ db = SQLite3::Database.open 'database.db'
 
 # GET REQUESTS
 
-get '/get/all' do
-  table = db.execute "select * from images;"
-  JSON.pretty_generate convert_table_to_array_of_hashes table, %w(id name description date data)
-end
-
 get '/get/:name' do
   table = db.execute "select * from images where name = '#{params[:name]}';"
   JSON.pretty_generate convert_table_to_array_of_hashes(table, %w(id name description date data))[0]

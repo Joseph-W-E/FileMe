@@ -44,35 +44,6 @@ public class APIManagerSingleton {
     }
 
     /**
-     * Gets all the images stores on the server and stores them in the given container.
-     * @param container The layout that will hold all retrieved images.
-     */
-    public void getImages(final View container) {
-        Call<JsonArray> call = api.getAllImages();
-
-        call.enqueue(new Callback<JsonArray>() {
-            @Override
-            public void onResponse(Call<JsonArray> call, Response<JsonArray> response) {
-                if (response.isSuccessful()) {
-                    Log.i("GET SUCCESS", response.message());
-
-                    for (JsonElement element : response.body()) {
-                        Log.i("element", element.toString());
-                        addJsonObjectToContainer(element.getAsJsonObject(), container);
-                    }
-                } else {
-                    Log.i("GET FAILURE", response.message());
-                }
-            }
-
-            @Override
-            public void onFailure(Call<JsonArray> call, Throwable t) {
-                Log.i("GET FAILURE", t.getLocalizedMessage());
-            }
-        });
-    }
-
-    /**
      * Gets the image with the given name and stores it in the given container.
      * @param name The name of the image.
      * @param container The layout that will hold the retrieved image.
@@ -162,8 +133,9 @@ public class APIManagerSingleton {
             factory.addDescription(desc);
         factory.addDate(date);
 
-        ((ScrollView) container).addView(factory.build());
-        
+        LinearLayout ll = (LinearLayout) container;
+        ll.removeAllViews();
+        ll.addView(factory.build());
     }
     
 }

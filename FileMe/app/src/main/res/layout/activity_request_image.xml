@@ -7,7 +7,7 @@
     android:padding="16dp"
     tools:context="com.example.joey.fileme.request_image.RequestImageActivity">
 
-    <ScrollView
+    <LinearLayout
         android:id="@+id/request_image_activity_image_container"
         android:layout_weight="1"
         android:layout_width="match_parent"

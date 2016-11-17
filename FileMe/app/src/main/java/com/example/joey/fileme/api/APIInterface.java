@@ -1,6 +1,5 @@
 package com.example.joey.fileme.api;
 
-import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
 import retrofit2.Call;
@@ -17,13 +16,10 @@ import retrofit2.http.Path;
 public interface APIInterface {
 
 
-    String URL = "http://64.113.69.208:4567";
+    String URL = "http://65.110.227.87:4567";
 
 
     /*** GET REQUESTS ***/
-
-    @GET("/get/all")
-    Call<JsonArray> getAllImages();
 
     @GET("/get/{name}")
     Call<JsonObject> getImage(@Path("name") String name);
