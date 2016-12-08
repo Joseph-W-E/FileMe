@@ -16,7 +16,7 @@ import retrofit2.http.Path;
 public interface APIInterface {
 
 
-    String URL = "http://65.110.227.87:4567";
+    String URL = "http://65.110.227.83:4567";
 
 
     /*** GET REQUESTS ***/

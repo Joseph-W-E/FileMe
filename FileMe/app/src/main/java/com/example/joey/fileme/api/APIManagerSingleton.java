@@ -5,12 +5,9 @@ import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import android.widget.Toast;
 
-import com.example.joey.fileme.request_image.server_image_view.ServerImageViewFactory;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
+import com.example.joey.fileme.request_image.server_image_view.ServerImageViewBuilder;
 import com.google.gson.JsonObject;
 
 import retrofit2.Call;
@@ -126,16 +123,16 @@ public class APIManagerSingleton {
         if (!jsonObject.get("data").isJsonNull())
             data = Base64.decode(jsonObject.get("data").getAsString(), Base64.DEFAULT);
 
-        ServerImageViewFactory factory = new ServerImageViewFactory(container.getContext(), data)
+        ServerImageViewBuilder builder = new ServerImageViewBuilder(container.getContext(), data)
                 .addID(id)
                 .addName(name);
         if (!desc.equals("default"))
-            factory.addDescription(desc);
-        factory.addDate(date);
+            builder.addDescription(desc);
+        builder.addDate(date);
 
         LinearLayout ll = (LinearLayout) container;
         ll.removeAllViews();
-        ll.addView(factory.build());
+        ll.addView(builder.build());
     }
     
 }
